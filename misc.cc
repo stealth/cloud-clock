@@ -49,9 +49,11 @@ int nonblock(int fd)
 	if (fcntl(fd, F_SETFL, f) < 0)
                 return -1;
 
+#ifdef __linux__
 	int one = 1; socklen_t len = sizeof(one);
 	if (setsockopt(fd, SOL_TCP, TCP_NODELAY, &one, len) < 0)
 		return -1;
+#endif
 	return 0;
 }
 
